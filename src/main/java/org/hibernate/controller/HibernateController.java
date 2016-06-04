@@ -78,24 +78,24 @@ public class HibernateController {
     		Truck Rzeszin = new Truck(6, "Rzeszow", "ZBAA", "Rzesz", "50.037173", "22.003216");
     		
     		//Trasy
-    		Routes gdToWawa1 = new Routes(1, "Gd->Wawa", 1, 2, new Date(2016, 6, 1, 10, 20), 50, 50, 300, 1.0);
-    		Routes gdToWawa2 = new Routes(2, "Gd->Wawa", 1, 2, new Date(2016, 6, 1, 15, 30), 50, 50, 300, 1.0);
-    		Routes gdToKrak1 = new Routes(3, "Gd->Krak", 1, 3, new Date(2016, 6, 1, 8, 50), 120, 200, 1306, 2.3);
-    		Routes gdToKrak2 = new Routes(4, "Gd->Krak", 1, 3, new Date(2016, 6, 1, 16, 20), 120, 200, 1306, 2.3);
-    		Routes wawaToRzesz1 = new Routes(5, "Wawa->Rzesz", 2, 6, new Date(2016, 6, 1, 4, 20), 100, 800, 7000, 8.0);
-    		Routes wawaToRzesz2 = new Routes(6, "Wawa->Rzesz", 2, 6, new Date(2016, 6, 1, 20, 40), 100, 800, 7000, 8.0);
-    		Routes RzeszToSzcz = new Routes(7, "Rzesz->Szczn", 6, 5, new Date(2016, 6, 1, 11, 06), 150, 750, 8926, 12.0);
-    		Routes SzczToPozn = new Routes(8, "Szcz->Pozn", 5, 4, new Date(2016, 6, 1, 14, 15), 150, 1200, 15960, 20.2);
-    		Routes RzeszToPozn = new Routes(9, "Rzesz->Pozn", 6, 4, new Date(2016, 6, 1, 4, 6), 150, 1000, 10962, 13.33);
-    		Routes KrakToPozn1 = new Routes(10, "Krak->Pozn", 3, 4, new Date(2016, 6, 1, 5, 0), 150, 600, 5535, 7.8);
-    		Routes KrakToPozn2 = new Routes(11, "Krak->Pozn", 3, 4, new Date(2016, 6, 1, 20, 55), 150, 600, 5535, 7.9);
-    		Routes PoznToKrak = new Routes(12, "Pozn->Krak", 4, 3, new Date(2016, 6, 1, 7, 0), 150, 600, 5535, 8.0);
-    		Routes PoznToRzesz = new Routes(13, "Pozn->Rzesz", 4, 6, new Date(2016, 6, 1, 8, 0), 150, 1000, 10962, 13.5);
-    		Routes RzeszToWawa = new Routes(14, "Rzesz->Wawa", 6, 2, new Date(2016, 6, 1, 2, 0), 150, 800, 7000, 8.0);
-    		Routes SzczToRzesz = new Routes(15, "Szcz->Rzesz", 5, 6, new Date(2016, 6, 1, 23, 0), 150, 750, 8926, 12.0);
-    		Routes KrakToWawa = new Routes(16, "Krak->Wawa", 3, 2, new Date(2016, 6, 1, 20, 0), 150, 200, 1500, 2.75);
+    		Routes gdToWawa1 = new Routes(1, "Gd->Wawa", 1, 2, new Date(2016, 6, 1, 10, 20), 50, 50, 400, 4.0);
+    		Routes gdToWawa2 = new Routes(2, "Gd->Wawa", 1, 2, new Date(2016, 6, 1, 15, 30), 50, 50, 400, 4.0);
+    		Routes gdToKrak1 = new Routes(3, "Gd->Krak", 1, 3, new Date(2016, 6, 1, 8, 50), 120, 200, 806, 8.0);
+    		Routes gdToKrak2 = new Routes(4, "Gd->Krak", 1, 3, new Date(2016, 6, 1, 16, 20), 120, 200, 806, 8.0);
+    		Routes wawaToRzesz1 = new Routes(5, "Wawa->Rzesz", 2, 6, new Date(2016, 6, 1, 4, 20), 100, 800, 300, 4.0);
+    		Routes wawaToRzesz2 = new Routes(6, "Wawa->Rzesz", 2, 6, new Date(2016, 6, 1, 20, 40), 100, 800, 300, 4.0);
+    		Routes RzeszToSzcz = new Routes(7, "Rzesz->Szczn", 6, 5, new Date(2016, 6, 1, 11, 06), 150, 1250, 900, 14.0);
+    		Routes SzczToPozn = new Routes(8, "Szcz->Pozn", 5, 4, new Date(2016, 6, 1, 14, 15), 150, 1200, 450, 5.2);
+    		Routes RzeszToPozn = new Routes(9, "Rzesz->Pozn", 6, 4, new Date(2016, 6, 1, 4, 6), 150, 1000,500 , 3.33);
+    		Routes KrakToPozn1 = new Routes(10, "Krak->Pozn", 3, 4, new Date(2016, 6, 1, 5, 0), 150, 600, 435, 4.8);
+    		Routes KrakToPozn2 = new Routes(11, "Krak->Pozn", 3, 4, new Date(2016, 6, 1, 20, 55), 150, 600, 435, 4.9);
+    		Routes PoznToKrak = new Routes(12, "Pozn->Krak", 4, 3, new Date(2016, 6, 1, 7, 0), 150, 600, 335, 5.0);
+    		Routes PoznToRzesz = new Routes(13, "Pozn->Rzesz", 4, 6, new Date(2016, 6, 1, 8, 0), 150, 1000, 865, 8.5);
+    		Routes RzeszToWawa = new Routes(14, "Rzesz->Wawa", 6, 2, new Date(2016, 6, 1, 2, 0), 150, 800, 300, 4.0);
+    		Routes SzczToRzesz = new Routes(15, "Szcz->Rzesz", 5, 6, new Date(2016, 6, 1, 23, 0), 150, 750, 900, 14.0);
+    		Routes KrakToWawa = new Routes(16, "Krak->Wawa", 3, 2, new Date(2016, 6, 1, 20, 0), 150, 200, 500, 3.75);
     		
-    		//bramki
+    		//miejsca załadunku
     		Gate gateF1 = new Gate(1, "Gd->Wawa", 2, new Date(2016, 6, 1, 9, 0), new Date(2016, 6, 1, 10, 0), 1);
     		Gate gateF2 = new Gate(2, "Gd->Wawa", 2, new Date(2016, 6, 1, 14, 35), new Date(2016, 6, 1, 15, 10), 1);
     		Gate gateF3 = new Gate(3, "Gd->Krak", 3, new Date(2016, 6, 1, 7, 55), new Date(2016, 6, 1, 8, 40), 1);
@@ -113,7 +113,7 @@ public class HibernateController {
     		Gate gateF15 = new Gate(15, "Szcz->Rzesz", 6, new Date(2016, 6, 1, 22, 0), new Date(2016, 6, 1, 22, 50), 1);
     		Gate gateF16 = new Gate(16, "Krak->Wawa", 2, new Date(2016, 6, 1, 19, 0), new Date(2016, 6, 1, 19, 50), 1);
     		
-    		//kontrola baga�u
+    		//kontrola zaladunku
     		CKIN ckinF1 = new CKIN(1, "Gd->Wawa", 2, new Date(2016, 6, 1, 9, 0), new Date(2016, 6, 1, 10, 0), 20, 1);
     		CKIN ckinF2 = new CKIN(2, "Gd->Wawa", 2, new Date(2016, 6, 1, 14, 35), new Date(2016, 6, 1, 15, 10), 20, 1);
     		CKIN ckinF3 = new CKIN(3, "Gd->Krak", 3, new Date(2016, 6, 1, 7, 55), new Date(2016, 6, 1, 8, 40), 20, 1);
