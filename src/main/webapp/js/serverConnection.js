@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://192.168.99.101:32768/socket");
+var ws = new WebSocket("ws://localhost:32768/socket");
  
 // called when socket connection established
 ws.onopen = function() {
