@@ -72,10 +72,10 @@ public class HibernateController {
     		//Lotniska
     		Truck gdansk = new Truck(1, "Gdansk", "EPGD", "GDN", "54.3762", "18.4718");
     		Truck wawa = new Truck(2, "Warszawa", "EPWA", "WAW", "52.16656", "20.98735");
-    		Truck londyn = new Truck(3, "Londyn Heathrow", "EGLL", "LHR", "51.4706", "-0.461941");
-    		Truck ny = new Truck(4, "Nowy Jork", "KJFK", "JFK", "40.6444", "-73.7827");
-    		Truck sydney = new Truck(5, "Sydney", "YSSY", "SYD", "-33.9357", "151.166");
-    		Truck pekin = new Truck(6, "Pekin", "ZBAA", "PEK", "40.0754", "116.592");
+    		Truck londyn = new Truck(3, "Krakow", "EGLL", "LHR", "50.064316", "19.972592");
+    		Truck ny = new Truck(4, "Poznan", "KJFK", "JFK", "52.414688", "16.920199");
+    		Truck sydney = new Truck(5, "Szczecin", "YSSY", "SYD", "53.437387", "14.549774");
+    		Truck pekin = new Truck(6, "Rzeszow", "ZBAA", "PEK", "50.037173", "22.003216");
     		
     		//Loty
     		Routes gdToWawa1 = new Routes(1, "Gd->Wawa", 1, 2, new Date(2016, 6, 1, 10, 20), 50, 50, 300, 1.0);
