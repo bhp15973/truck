@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class CKIN {
 
     private Integer ID;
-    private String flightNumber;
+    private String RouteNumber;
     private Integer destination;
     private Date timeStart;
     private Date timeStop;
@@ -21,9 +21,9 @@ public class CKIN {
     public CKIN() {
     }
 
-    public CKIN(Integer ID, String flightNumber, Integer destination, Date timeStart, Date timeStop, Integer luggageLimit, Integer delayCode) {
+    public CKIN(Integer ID, String RouteNumber, Integer destination, Date timeStart, Date timeStop, Integer luggageLimit, Integer delayCode) {
         this.ID = ID;
-        this. flightNumber = flightNumber;
+        this. RouteNumber = RouteNumber;
         this.destination = destination;
         this.timeStart = timeStart;
         this.timeStop = timeStop;
@@ -40,12 +40,12 @@ public class CKIN {
 		ID = iD;
 	}
 
-	public String getFlightNumber() {
-		return flightNumber;
+	public String getRouteNumber() {
+		return RouteNumber;
 	}
 
-	public void setFlightNumber(String flightNumber) {
-		this.flightNumber = flightNumber;
+	public void setRouteNumber(String RouteNumber) {
+		this.RouteNumber = RouteNumber;
 	}
 
 	public Integer getDestination() {

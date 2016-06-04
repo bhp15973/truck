@@ -17,6 +17,6 @@
 		<mapping class="eti.bartek.sqlite.model.Truck"/>
 		<mapping class="eti.bartek.sqlite.model.CKIN"/>
 		<mapping class="eti.bartek.sqlite.model.Gate"/>
-		<mapping class="eti.bartek.sqlite.model.Flights"/>
+		<mapping class="eti.bartek.sqlite.model.Routes"/>
 	</session-factory>
 </hibernate-configuration>

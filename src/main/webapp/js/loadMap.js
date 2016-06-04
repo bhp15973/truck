@@ -51,18 +51,18 @@ function setPaths(paths) {
     for(var i = 0; i < paths.length; i++) {
         var color = getRandomColor();
         for(var j = 0; j < paths[i].length; j++) {
-            var flight = paths[i][j];
-            new_tbody.appendChild(createTableRow([flight.src.city + " -> " + flight.dest.city, "( " + flight.flight.flightNumber + " )"], color));
-            new_tbody.appendChild(createTableRow(["Start: " + flight.flight.date, "Length: " + flight.flight.length], color));
-            new_tbody.appendChild(createTableRow(["Price: " + flight.flight.ticketPrice, "Free seats: " + flight.flight.freeSeats, "Distance: " + flight.flight.distance], color));
-            for(var k = 0; k < flight.gate.length; k++) {
-                new_tbody.appendChild(createTableRow(["Gate: " + flight.gate[k].timeStart + " -> " + flight.gate[k].timeStop], color));
+            var Route = paths[i][j];
+            new_tbody.appendChild(createTableRow([Route.src.city + " -> " + Route.dest.city, "( " + Route.Route.RouteNumber + " )"], color));
+            new_tbody.appendChild(createTableRow(["Start: " + Route.Route.date, "Length: " + Route.Route.length], color));
+            new_tbody.appendChild(createTableRow(["Price: " + Route.Route.ticketPrice, "Free seats: " + Route.Route.freeSeats, "Distance: " + Route.Route.distance], color));
+            for(var k = 0; k < Route.gate.length; k++) {
+                new_tbody.appendChild(createTableRow(["Gate: " + Route.gate[k].timeStart + " -> " + Route.gate[k].timeStop], color));
             }
-            for(var k = 0; k < flight.ckin.length; k++) {
-                new_tbody.appendChild(createTableRow(["CKIN: " + flight.ckin[k].timeStart + " -> " + flight.ckin[k].timeStop,
-                                                        "Luggage limit: " + flight.ckin[k].luggageLimit + "kg"], color));
+            for(var k = 0; k < Route.ckin.length; k++) {
+                new_tbody.appendChild(createTableRow(["CKIN: " + Route.ckin[k].timeStart + " -> " + Route.ckin[k].timeStop,
+                                                        "Luggage limit: " + Route.ckin[k].luggageLimit + "kg"], color));
             }
-            drawPolyline(L.latLng(flight.src.lat, flight.src.lon), L.latLng(flight.dest.lat, flight.dest.lon), color);
+            drawPolyline(L.latLng(Route.src.lat, Route.src.lon), L.latLng(Route.dest.lat, Route.dest.lon), color);
             new_tbody.appendChild(createSeparator('transparent', '15px'));
         }
         new_tbody.appendChild(createSeparator('black', '2px'));

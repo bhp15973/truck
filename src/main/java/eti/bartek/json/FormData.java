@@ -12,7 +12,7 @@ import org.hibernate.controller.HibernateController;
 import com.google.gson.JsonArray;
 
 import eti.bartek.sqlite.model.Truck;
-import eti.bartek.sqlite.model.FlightPath;
+import eti.bartek.sqlite.model.RoutePath;
 
 public class FormData {
     
@@ -59,8 +59,8 @@ public class FormData {
         Truck from = HibernateController.<Truck>getSingleElement("Truck", "city='" + getForm().getFrom() + "'");
         Truck to = HibernateController.<Truck>getSingleElement("Truck", "city='" + getForm().getTo() + "'");
         
-        List<FlightPath> paths = HibernateController.getFlightPath(from.getTruckId(), to.getTruckId());
-        for(FlightPath fPath : paths) {
+        List<RoutePath> paths = HibernateController.getRoutePath(from.getTruckId(), to.getTruckId());
+        for(RoutePath fPath : paths) {
             jsonPaths.add(JSONBuilder.preparePathJson(fPath, getForm().getDate()));
         }
         

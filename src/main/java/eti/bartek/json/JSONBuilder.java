@@ -13,8 +13,8 @@ import com.google.gson.JsonObject;
 
 import eti.bartek.sqlite.model.Truck;
 import eti.bartek.sqlite.model.CKIN;
-import eti.bartek.sqlite.model.FlightPath;
-import eti.bartek.sqlite.model.Flights;
+import eti.bartek.sqlite.model.RoutePath;
+import eti.bartek.sqlite.model.Routes;
 import eti.bartek.sqlite.model.Gate;
 
 public class JSONBuilder {
@@ -48,9 +48,9 @@ public class JSONBuilder {
         return resultJson;
     }
     
-    public static JsonArray preparePathJson(FlightPath path, Date startDate) {
+    public static JsonArray preparePathJson(RoutePath path, Date startDate) {
         JsonArray pathArray = new JsonArray();
-        List<Flights> flights = new ArrayList<Flights>();
+        List<Routes> Routes = new ArrayList<Routes>();
         List<Gate> gates = new ArrayList<>();
         Truck srcTruck = null, destTruck = null;
         List<CKIN> ckins = new ArrayList<>();
@@ -59,23 +59,23 @@ public class JSONBuilder {
         try {
             for(int i = 0; i < TruckIDs.length - 1; i++) {
                 if(!TruckIDs[i].equals("") && !TruckIDs[i + 1].equals("")) {
-                    JsonObject singleFlight = new JsonObject();
-                    JsonObject flightData = new JsonObject();
+                    JsonObject singleRoute = new JsonObject();
+                    JsonObject RouteData = new JsonObject();
                     JsonArray gateData = new JsonArray();
                     JsonArray ckinData = new JsonArray();
                     JsonObject srcTruckJson = new JsonObject();
                     JsonObject destTruckJson = new JsonObject();
-                    flights = HibernateController.getDataList("Flights",
+                    Routes = HibernateController.getDataList("Routes",
                         "TruckID='" + TruckIDs[i] + "' and destination='" + TruckIDs[i+1] + "'");
-                    Flights closestFlight = findClosestFlight(flights, currentDate);
+                    Routes closestRoute = findClosestRoute(Routes, currentDate);
                     Calendar calendar = GregorianCalendar.getInstance();
                     calendar.setTime(currentDate);
-                    calendar.add(Calendar.MINUTE, flightDurationToInt(closestFlight.getDuration()));
-                    calendar.setTime(closestFlight.getDate());
-                    srcTruck = HibernateController.<Truck>getSingleElement("Truck", "TruckId=" + closestFlight.getTruckID());
-                    destTruck = HibernateController.<Truck>getSingleElement("Truck", "TruckId=" + closestFlight.getDestination());
-                    gates = HibernateController.<Gate>getDataList("Gate", "ID=" + closestFlight.getID());
-                    ckins = HibernateController.<CKIN>getDataList("CKIN", "ID=" + closestFlight.getID());
+                    calendar.add(Calendar.MINUTE, RouteDurationToInt(closestRoute.getDuration()));
+                    calendar.setTime(closestRoute.getDate());
+                    srcTruck = HibernateController.<Truck>getSingleElement("Truck", "TruckId=" + closestRoute.getTruckID());
+                    destTruck = HibernateController.<Truck>getSingleElement("Truck", "TruckId=" + closestRoute.getDestination());
+                    gates = HibernateController.<Gate>getDataList("Gate", "ID=" + closestRoute.getID());
+                    ckins = HibernateController.<CKIN>getDataList("CKIN", "ID=" + closestRoute.getID());
                     
                     srcTruckJson.addProperty("lat", srcTruck.getLAT());
                     srcTruckJson.addProperty("lon", srcTruck.getLON());
@@ -85,20 +85,20 @@ public class JSONBuilder {
                     destTruckJson.addProperty("city", destTruck.getCity());
                     ckinData = parseCkins(ckins);
                     gateData = parseGates(gates);
-                    flightData.addProperty("flightNumber", closestFlight.getFlightNumber());
-                    flightData.addProperty("date", String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
-                    flightData.addProperty("freeSeats", closestFlight.getFreeSeats());
-                    flightData.addProperty("ticketPrice", closestFlight.getTicketPrice());
-                    flightData.addProperty("distance", closestFlight.getDistance());
-                    flightData.addProperty("length", parseFlightDuration(closestFlight.getDuration()));
+                    RouteData.addProperty("RouteNumber", closestRoute.getRouteNumber());
+                    RouteData.addProperty("date", String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+                    RouteData.addProperty("freeSeats", closestRoute.getFreeSeats());
+                    RouteData.addProperty("ticketPrice", closestRoute.getTicketPrice());
+                    RouteData.addProperty("distance", closestRoute.getDistance());
+                    RouteData.addProperty("length", parseRouteDuration(closestRoute.getDuration()));
                     
-                    singleFlight.add("dest", destTruckJson);
-                    singleFlight.add("src", srcTruckJson);
-                    singleFlight.add("ckin", ckinData);
-                    singleFlight.add("gate", gateData);
-                    singleFlight.add("flight", flightData);
+                    singleRoute.add("dest", destTruckJson);
+                    singleRoute.add("src", srcTruckJson);
+                    singleRoute.add("ckin", ckinData);
+                    singleRoute.add("gate", gateData);
+                    singleRoute.add("Route", RouteData);
                     
-                    pathArray.add(singleFlight);
+                    pathArray.add(singleRoute);
                 }
             }
         } catch(Exception e) {
@@ -119,18 +119,18 @@ public class JSONBuilder {
         return resultJson;
     }
 	
-	private static Flights findClosestFlight(List<Flights> flights, Date currentDate) {
-	    Flights closestFlight = null;
+	private static Routes findClosestRoute(List<Routes> Routes, Date currentDate) {
+	    Routes closestRoute = null;
 	    long minDiff = Long.MAX_VALUE;
 	    long currentDiff = 0;
-	    for(Flights f : flights) {
+	    for(Routes f : Routes) {
 	        currentDiff = f.getDate().getTime() - currentDate.getTime();
 	        if(currentDiff < minDiff && currentDiff > 0) {
-	            closestFlight = f;
+	            closestRoute = f;
 	            minDiff = currentDiff;
 	        }
 	    }
-	    return closestFlight;
+	    return closestRoute;
 	}
 	
 	private static JsonArray parseCkins(List<CKIN> ckins) {
@@ -162,8 +162,8 @@ public class JSONBuilder {
 	    return jArray;
 	}
 	
-	private static String parseFlightDuration(Double duration) {
-	    Integer dur = flightDurationToInt(duration);
+	private static String parseRouteDuration(Double duration) {
+	    Integer dur = RouteDurationToInt(duration);
 	    String durationStr = null;
 	    int hours = dur / 60;
 	    int minutes = dur % 60;
@@ -171,7 +171,7 @@ public class JSONBuilder {
 	    return durationStr;
 	}
 	
-	private static Integer flightDurationToInt(Double duration) {
+	private static Integer RouteDurationToInt(Double duration) {
 	    Integer dur = (int)Math.round(duration*60);
 	    return dur;
 	}
