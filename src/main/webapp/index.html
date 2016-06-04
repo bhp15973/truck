@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Truck</title>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+		<link rel="stylesheet" type="text/css" href="css/auto-complete.css" />
+		
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        
+        <script type="text/javascript" src="js/loadMap.js"></script>
+		<script type="text/javascript" src="js/view.js"></script>
+		<script type="text/javascript" src="js/calendar.js"></script>
+        
+    </head>
+    
+    <body onload="initMap()">
+        <div id="map"></div>
+        <div id="TruckForm">
+			<form id="flight_form" class="appnitro"  method="post" onsubmit="return submitForm()">
+				<div class="form_description">
+					<h2>Find flight</h2>
+					<p></p>
+				</div>						
+				<ul>
+					<li>
+						<label class="description" for="from_textbox">From: </label>
+						<div>
+							<input id="from_textbox" name="from_textbox" class="element text large" type="text" maxlength="255" value="" required/> 
+						</div> 
+					</li>
+					<li>
+						<label class="description" for="to_textbox">To: </label>
+						<div>
+							<input id="to_textbox" name="to_textbox" class="element text large" type="text" maxlength="255" value="" required/> 
+						</div> 
+					</li>
+					<li>
+						<label class="description" for="date_label">Date: </label>
+						
+						<span>
+							<input id="date_label_1" name="date_months" class="element text" size="2" maxlength="2" value="" type="number" min="1" max="12" required> /
+							<label for="date_months">MM</label>
+						</span>
+						<span>
+							<input id="date_label_2" name="date_days" class="element text" size="2" maxlength="2" value="" type="number" min="1" max="31" required> /
+							<label for="date_days">DD</label>
+						</span>
+						<span>
+							<input id="calendar_year" name="calendar_year" class="element text" size="4" maxlength="4" value="" type="text" pattern="\d{4}" required>
+							<label for="calendar_year">YYYY</label>
+						</span>
+						<span id="calendar_image_span">
+							<img id="calendar_image" class="datepicker" src="images/calendar.gif" alt="Pick a date.">	
+						</span>
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField	 : "calendar_year",
+							baseField    : "date_label",
+							displayArea  : "calendar_image_span",
+							button		 : "calendar_image",
+							ifFormat	 : "%B %e, %Y",
+							onSelect	 : selectDate
+							});
+						</script>
+						</li>
+						<li>
+							<label class="description" for="element_4">Time: </label>
+							<span>
+								<input id="time_hours" name="time_hours" class="element text " size="2" type="number" min="0" max="23" maxlength="2" required /> : 
+								<label>HH</label>
+							</span>
+							<span>
+								<input id="time_mins" name="time_mins" class="element text " size="2" type="number" min="0" max="59" maxlength="2" value="" required/>
+								<label>MM</label>
+							</span>
+						</li>
+			
+						<li class="buttons">
+							<input type="hidden" name="form_id" value="1123961" />
+							<input id="saveForm" class="button_text" type="submit" name="submit" value="Find" />
+							<label class="error" id="sending_error_label"></label>
+						</li>
+					</ul>
+			</form>
+        </div>
+        <div id="route_container">
+            <table>
+                <tbody id="table_body"></tbody>
+            </table>
+            <input type="button" value="Back" onclick="showForm();"></input>
+        </div>
+        <script type="text/javascript">
+            function downloadJSAtOnload() {
+                var element = document.createElement("script");
+                element.src = "js/serverConnection.js";
+                document.body.appendChild(element);
+            }
+			function stopRKey(evt) {
+				var evt = (evt) ? evt : ((event) ? event : null);
+				var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+				if((evt.keyCode == 13) && (node.type=="text")) {return false;}
+			}
+			
+            if (window.addEventListener)
+                window.addEventListener("load", downloadJSAtOnload, false);
+            else if (window.attachEvent)
+                window.attachEvent("onload", downloadJSAtOnload);
+            else window.onload = downloadJSAtOnload;
+			document.onkeypress = stopRKey;
+        </script>
+		<script src="js/auto-complete.min.js"></script>
+		<script type="text/javascript">
+			function autocompletion_suggest(term, suggest) {
+				term = term.toLowerCase();
+				var suggestions = [];
+				var from_textbox_value = document.getElementById('from_textbox').value;
+				var to_textbox_value = document.getElementById('to_textbox').value;
+				for(var i = 0; i < autocomplete.length; i++) {
+					if(~autocomplete[i].toLowerCase().indexOf(term) && from_textbox_value != to_textbox_value) {
+						suggestions.push(autocomplete[i]);
+						suggest(suggestions);
+					}
+				}
+			}
+			var from_textbox_autocomplete = new autoComplete({
+				selector: '#from_textbox',
+				minChars: 1,
+				source: function(term, suggest) {
+					term = term.toLowerCase();
+					var suggestions = [];
+					var to_textbox_value = document.getElementById('to_textbox').value;
+					for(var i = 0; i < autocomplete.length; i++) {
+						if(~autocomplete[i].toLowerCase().indexOf(term) && 
+							autocomplete[i] != to_textbox_value) {
+							suggestions.push(autocomplete[i]);
+							suggest(suggestions);
+						}
+					}
+				}
+			});
+			var to_textbox_autocomplete = new autoComplete({
+				selector: '#to_textbox',
+				minChars: 1,
+				source: function(term, suggest) {
+					term = term.toLowerCase();
+					var suggestions = [];
+					var from_textbox_value = document.getElementById('from_textbox').value;
+					for(var i = 0; i < autocomplete.length; i++) {
+						if(~autocomplete[i].toLowerCase().indexOf(term) && 
+							autocomplete[i] != from_textbox_value) {
+							suggestions.push(autocomplete[i]);
+							suggest(suggestions);
+						}
+					}
+				}
+			});
+		</script>
+    </body>
+    
+</html>
