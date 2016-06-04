@@ -54,14 +54,6 @@ function setPaths(paths) {
             var Route = paths[i][j];
             new_tbody.appendChild(createTableRow([Route.src.city + " -> " + Route.dest.city, "( " + Route.Route.RouteNumber + " )"], color));
             new_tbody.appendChild(createTableRow(["Start: " + Route.Route.date, "Length: " + Route.Route.length], color));
-            new_tbody.appendChild(createTableRow(["Price: " + Route.Route.ticketPrice, "Free seats: " + Route.Route.freeSeats, "Distance: " + Route.Route.distance], color));
-            for(var k = 0; k < Route.gate.length; k++) {
-                new_tbody.appendChild(createTableRow(["Gate: " + Route.gate[k].timeStart + " -> " + Route.gate[k].timeStop], color));
-            }
-            for(var k = 0; k < Route.ckin.length; k++) {
-                new_tbody.appendChild(createTableRow(["CKIN: " + Route.ckin[k].timeStart + " -> " + Route.ckin[k].timeStop,
-                                                        "Luggage limit: " + Route.ckin[k].luggageLimit + "kg"], color));
-            }
             drawPolyline(L.latLng(Route.src.lat, Route.src.lon), L.latLng(Route.dest.lat, Route.dest.lon), color);
             new_tbody.appendChild(createSeparator('transparent', '15px'));
         }
